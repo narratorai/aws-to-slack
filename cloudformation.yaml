@@ -180,3 +180,10 @@ Resources:
       TopicArn: !Ref FunctionFailingTopic
       Protocol: email
       Endpoint: !Ref ErrorAlertEmail
+
+Outputs:
+  Handler:
+    Description: 'AWS-to-Slack Lambda Handler'
+    Export:
+      Name: !Sub ${AWS::StackName}-Arn
+    Value: !If [DirectDeploy, !GetAtt Handler.Arn, !GetAtt AWSToSlackHandler.Arn]
