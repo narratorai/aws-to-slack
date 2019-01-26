@@ -100,9 +100,8 @@ class SNSParser {
 				const accountId = snsArn[4];
 				const topic = snsArn[5];
 				const url = `https://console.aws.amazon.com/sns/v2/home?region=${region}#/topics/arn:aws:sns:${region}:${accountId}:${topic}`;
-				const signin = `https://${accountId}.signin.aws.amazon.com/console/sns?region=${region}`;
 
-				att.footer = `Received via <${url}|SNS ${topic}> | <${signin}|Sign-In>`;
+				att.footer = `Received via <${url}|SNS ${topic}>`;
 			}
 		}
 	}
