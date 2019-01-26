@@ -18,7 +18,7 @@ Metadata:
 Parameters:
   ParentAlertStack:
     Type: String
-    Description: 'Optional: Stack name containing SNS topic from https://github.com/widdix/aws-cf-templates/blob/master/operations/alert.yaml'
+    Description: 'Optional: Stack name containing SNS topic from https://github.com/cfn-modules/alerting'
   ErrorAlertEmail:
     Description: 'Optional: email address to receive alert that function is failing. The email will only contain a count of failures -- you will need to then review CloudWatch logs to determine cause of the issue. HIGHLY RECOMMEND handling failures like this within a DeadLetterQueue via ParentAlertStack instead.'
     Type: String
@@ -144,7 +144,7 @@ Resources:
     Condition: HasAlertStack
     Type: 'AWS::SNS::Subscription'
     Properties:
-      TopicArn: {'Fn::ImportValue': !Sub '${ParentAlertStack}-TopicARN'}
+      TopicArn: {'Fn::ImportValue': !Sub '${ParentAlertStack}-ARN'}
       Protocol: lambda
       Endpoint: !If [DirectDeploy, !GetAtt Handler.Arn, !GetAtt AWSToSlackHandler.Arn]
 
