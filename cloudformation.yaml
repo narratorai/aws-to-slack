@@ -114,7 +114,7 @@ Resources:
     Condition: HasAlertStack
     Type: 'AWS::SNS::Subscription'
     Properties:
-      TopicArn: {'Fn::ImportValue': !Sub '${ParentAlertStack}-ARN'}
+      TopicArn: {'Fn::ImportValue': !Sub '${ParentAlertStack}-Arn'}
       Protocol: lambda
       Endpoint: !GetAtt Function.Arn
 
