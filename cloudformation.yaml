@@ -18,7 +18,7 @@ Metadata:
 Parameters:
   ParentAlertStack:
     Type: String
-    Description: 'Optional: Stack name containing SNS topic from https://github.com/widdix/aws-cf-templates/blob/master/operations/alert.yaml'
+    Description: 'Optional: Stack name containing SNS topic from https://github.com/cfn-modules/alerting'
   ErrorAlertEmail:
     Description: 'Optional: email address to receive alert that function is failing. The email will only contain a count of failures -- you will need to then review CloudWatch logs to determine cause of the issue. HIGHLY RECOMMEND handling failures like this within a DeadLetterQueue via ParentAlertStack instead.'
     Type: String
@@ -49,8 +49,8 @@ Resources:
       Handler: src/index.handler
       Role: !GetAtt FunctionRole.Arn
       Runtime: nodejs8.10
-      MemorySize: 256
-      Timeout: 15 # Cross-region metrics lookup requires at least 10s
+      MemorySize: 512
+      Timeout: 30 # Cross-region metrics lookup requires at least 10s
       Code:
         S3Bucket: !Sub 'aws-to-slack-${AWS::Region}'
         S3Key: release.zip
@@ -115,7 +115,7 @@ Resources:
     Condition: HasAlertStack
     Type: 'AWS::SNS::Subscription'
     Properties:
-      TopicArn: {'Fn::ImportValue': !Sub '${ParentAlertStack}-TopicARN'}
+      TopicArn: {'Fn::ImportValue': !Sub '${ParentAlertStack}-Arn'}
       Protocol: lambda
       Endpoint: !GetAtt Function.Arn
 
@@ -155,4 +155,6 @@ Resources:
 Outputs:
   LambdaFunction:
     Description: 'Lambda function name created by this stack.'
+    Export:
+      Name: !Sub ${AWS::StackName}-Arn
     Value: !Ref Function
