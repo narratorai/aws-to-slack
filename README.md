@@ -71,6 +71,11 @@ Ready to try the latest version for yourself? Installation into your own AWS env
    AWS_REGION="<your_lambda_region>" LAMBDA_NAME="<your_lambda_name>" make deploy
    ```  
 
+   If you use AWS CLI profiles, simply add `AWS_PROFILE` to the make command like so:
+   ```
+   AWS_PROFILE="my-profile" AWS_REGION="<your_lambda_region>" LAMBDA_NAME="<your_lambda_name>" make deploy
+   ```
+
 ### Option 3: Use deploy target
 
 See [Managing Multiple Deployments](#managing-multiple-deployments) for a `.env` file approach to creating or managing multiple stacks.
@@ -79,9 +84,9 @@ See [Managing Multiple Deployments](#managing-multiple-deployments) for a `.env`
 
 ### Step 1: Setup Slack
 The Lambda function communicates with Slack through a Slack webhook
-[webhook](https://your-slack-domain.slack.com/apps/manage). Note that you can either create an app, or a custom integration > Incoming webhook (easier, will only let you add a webhook)
+[webhook](https://my.slack.com/apps/manage). Note that you can either create an app, or a custom integration > Incoming webhook (easier, will only let you add a webhook)
 
-1. Navigate to https://your-slack-domain.slack.com/apps/manage and click
+1. Navigate to https://my.slack.com/apps/manage and click
    "Add Configuration".
 2. Choose the default channel where messages will be sent and click
    "Add Incoming WebHooks Integration".
